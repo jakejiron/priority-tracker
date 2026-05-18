@@ -88,6 +88,21 @@ svg.ring { transform: rotate(-90deg); }
 .flash { font-size: 12px; color: #286644; display: none; }
 .save-btn { background: #1a1916; color: #fff; border: none; border-radius: 7px; padding: 7px 16px; font-size: 13px; font-weight: 500; cursor: pointer; font-family: inherit; }
 .save-btn:hover { background: #2e2c28; }
+.date-row { display: flex; gap: 12px; flex-wrap: wrap; align-items: flex-end; }
+.date-field { display: flex; flex-direction: column; gap: 4px; }
+.date-field label { font-size: 10px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: #a09888; }
+.date-field input[type=date] { border: 1px solid #e4e0d8; border-radius: 7px; padding: 6px 10px; font-size: 13px; color: #1a1916; background: #faf9f7; font-family: inherit; }
+.date-field input[type=date]:focus { outline: none; border-color: #c06010; }
+.card-meta-row { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; margin-top: 5px; }
+.card-status-badge { font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 4px; }
+.st-notstarted { background: #f0ece4; color: #7a7468; }
+.st-inprogress { background: #fef2e0; color: #b85e08; }
+.st-blocked { background: #fde8e6; color: #b83020; }
+.st-done { background: #edf6f1; color: #286644; }
+.card-due { font-size: 11px; color: #7a7468; }
+.card-due.overdue { color: #b83020; font-weight: 600; }
+.card-updated { font-size: 11px; color: #b0a898; }
+.card-updated.stale { color: #b83020; font-weight: 600; }
 
 /* PROGRESS BAR */
 .pbar-wrap { height: 3px; background: #f0ece4; }
@@ -161,6 +176,8 @@ svg.ring { transform: rotate(-90deg); }
     <input type="text" id="m-blocked" placeholder="e.g. Coffee hire must be complete first">
     <label>Notes / context (optional)</label>
     <textarea id="m-notes" placeholder="Anything important to remember about this project..."></textarea>
+    <label>Due date (optional)</label>
+    <input type="date" id="m-due">
     <div class="modal-btns">
       <button class="modal-cancel" onclick="closeModal()">Cancel</button>
       <button class="modal-confirm" onclick="addProject()">Add project</button>
@@ -392,6 +409,11 @@ function render() {
     <div class="card-main">
       <div class="card-name">${ws.name}</div>
       <div class="card-why">${ws.why}</div>
+      <div class="card-meta-row">
+        <span class="card-status-badge st-${statusKey(ws.status)}">${statusLabel(ws.status)}</span>
+        ${ws.dueDate ? `<span class="card-due${isDueOverdue(ws.dueDate)?' overdue':''}">Due ${formatDate(ws.dueDate)}${isDueOverdue(ws.dueDate)?' ⚠':''}  </span>` : ''}
+        ${ws.lastUpdated ? `<span class="card-updated${isDaysStale(ws.lastUpdated,7)?' stale':''}">Updated ${daysAgo(ws.lastUpdated)}${isDaysStale(ws.lastUpdated,7)?' — stale':''}</span>` : ''}
+      </div>
     </div>
     <div class="ring-wrap">${ring(p,col)}<div class="ring-pct">${p}%</div></div>
     <div class="chev">▼</div>
@@ -423,11 +445,17 @@ function render() {
       </div>
       <div class="meta-bottom">
         <select class="status-sel" id="st-${ws.id}">
-          <option value="blocking" ${ws.status==='blocking'?'selected':''}>🔴 Blocking</option>
-          <option value="active" ${ws.status==='active'?'selected':''}>🟡 Active</option>
-          <option value="scheduled" ${ws.status==='scheduled'?'selected':''}>🔵 Scheduled</option>
+          <option value="notstarted" ${(ws.status==='notstarted'||ws.status==='scheduled')?'selected':''}>⬜ Not started</option>
+          <option value="inprogress" ${(ws.status==='inprogress'||ws.status==='active'||ws.status==='blocking')?'selected':''}>🟡 In progress</option>
+          <option value="blocked" ${ws.status==='blocked'?'selected':''}>🔴 Blocked</option>
           <option value="done" ${ws.status==='done'?'selected':''}>🟢 Done</option>
         </select>
+        <div class="date-row">
+          <div class="date-field">
+            <label>Due date</label>
+            <input type="date" id="due-${ws.id}" value="${ws.dueDate||''}">
+          </div>
+        </div>
         <div class="save-row">
           <span class="flash" id="fl-${ws.id}">✓ Saved</span>
           <button class="save-btn" onclick="saveCard('${ws.id}')">Save</button>
@@ -472,6 +500,37 @@ function addStep(wsId) {
   save(); openCards.add(wsId); render();
 }
 
+function statusKey(s) {
+  if (s==='notstarted'||s==='scheduled') return 'notstarted';
+  if (s==='inprogress'||s==='active'||s==='blocking') return 'inprogress';
+  if (s==='blocked') return 'blocked';
+  if (s==='done') return 'done';
+  return 'notstarted';
+}
+function statusLabel(s) {
+  const k = statusKey(s);
+  return {notstarted:'Not started', inprogress:'In progress', blocked:'Blocked', done:'Done'}[k];
+}
+function formatDate(d) {
+  if (!d) return '';
+  const [y,m,day] = d.split('-');
+  const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  return `${months[parseInt(m)-1]} ${parseInt(day)}`;
+}
+function isDueOverdue(d) {
+  if (!d) return false;
+  return new Date(d) < new Date();
+}
+function daysAgo(ts) {
+  const diff = Math.floor((Date.now() - ts) / 86400000);
+  if (diff === 0) return 'today';
+  if (diff === 1) return 'yesterday';
+  return `${diff}d ago`;
+}
+function isDaysStale(ts, days) {
+  return Math.floor((Date.now() - ts) / 86400000) >= days;
+}
+
 function saveCard(wsId) {
   const ws = state.find(w=>w.id===wsId);
   const na = document.getElementById('na-'+wsId);
@@ -480,6 +539,9 @@ function saveCard(wsId) {
   if (nt) ws.notes = nt.value;
   const st = document.getElementById('st-'+wsId);
   if (st) ws.status = st.value;
+  const due = document.getElementById('due-'+wsId);
+  if (due) ws.dueDate = due.value || null;
+  ws.lastUpdated = Date.now();
   save(); openCards.add(wsId); render();
   const fl = document.getElementById('fl-'+wsId);
   if (fl) { fl.style.display='inline'; setTimeout(()=>fl.style.display='none',2000); }
@@ -506,7 +568,7 @@ function openModal() {
 }
 function closeModal() {
   document.getElementById('modal-overlay').classList.remove('open');
-  ['m-name','m-why','m-blocked','m-notes'].forEach(id => document.getElementById(id).value = '');
+  ['m-name','m-why','m-blocked','m-notes','m-due'].forEach(id => document.getElementById(id).value = '');
   document.getElementById('m-tier').value = '2';
   document.getElementById('m-stripe').value = 'stripe-amber';
 }
@@ -521,8 +583,10 @@ function addProject() {
     why: document.getElementById('m-why').value.trim() || 'Added manually.',
     blockedBy: document.getElementById('m-blocked').value.trim() || null,
     nextAction: 'Define the first next action for this project',
-    status: 'active',
+    status: 'notstarted',
     notes: document.getElementById('m-notes').value.trim(),
+    dueDate: document.getElementById('m-due').value || null,
+    lastUpdated: Date.now(),
     steps: [],
   };
   state.push(newProject);
