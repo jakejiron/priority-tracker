@@ -7,136 +7,106 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; }
-html { background: #f5f4f1; font-family: 'Inter', sans-serif; color: #1a1916; }
+html { background: #c8ddf0; font-family: 'Inter', sans-serif; color: #1a1916; min-height: 100vh; }
 body { min-height: 100vh; padding-bottom: 80px; }
 .page { max-width: 780px; margin: 0 auto; padding: 2.5rem 1.5rem; }
-
-/* HEADER */
-.hd { margin-bottom: 2.5rem; }
-.hd-eyebrow { font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: #a09888; font-weight: 500; margin-bottom: 8px; }
-.hd-title { font-size: 26px; font-weight: 700; color: #1a1916; letter-spacing: -0.02em; }
-.hd-date { font-size: 13px; color: #9a9080; margin-top: 4px; }
-.hd-divider { border: none; border-top: 1px solid #e4e0d8; margin-top: 1.5rem; }
-
-/* TIER */
+.hd { margin-bottom: 2rem; }
+.hd-eyebrow { font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: #4a6a8a; font-weight: 600; margin-bottom: 8px; }
+.hd-title { font-size: 26px; font-weight: 700; color: #1a2e40; letter-spacing: -0.02em; }
+.hd-date { font-size: 13px; color: #5a7a9a; margin-top: 4px; }
+.hd-divider { border: none; border-top: 1px solid #a8c8e8; margin-top: 1.5rem; }
 .tier-hd { display: flex; align-items: center; gap: 10px; margin: 2rem 0 1rem; flex-wrap: wrap; }
-.tier-badge { font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; padding: 3px 10px; border-radius: 20px; white-space: nowrap; }
-.t1 .tier-badge { background: #fde8e6; color: #b83020; }
-.t2 .tier-badge { background: #fef2e0; color: #b85e08; }
-.t3 .tier-badge { background: #e8f0fc; color: #1a4e96; }
-.tier-desc { font-size: 13px; color: #9a9080; }
-
-/* CARD */
-.card { background: #fff; border: 1px solid #e4e0d8; border-radius: 12px; margin-bottom: 10px; overflow: hidden; }
+.tier-badge { font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; padding: 3px 10px; border-radius: 20px; white-space: nowrap; background: rgba(255,255,255,0.5); color: #3a5a7a; }
+.tier-desc { font-size: 13px; color: #4a6a8a; }
+.card { background: #fff; border: 1px solid #b8d0e8; border-radius: 12px; margin-bottom: 10px; overflow: hidden; box-shadow: 0 1px 4px rgba(40,80,120,0.07); }
 .card-header { display: flex; align-items: center; gap: 14px; padding: 16px 18px; cursor: pointer; }
-.card-header:hover { background: #faf9f7; }
-.card-stripe { width: 3px; height: 44px; border-radius: 2px; flex-shrink: 0; }
-.stripe-red { background: #d94030; }
-.stripe-amber { background: #c06010; }
-.stripe-blue { background: #2056c0; }
-.stripe-green { background: #286644; }
+.card-header:hover { background: #f8fbff; }
+.card-stripe { width: 4px; border-radius: 2px; flex-shrink: 0; align-self: stretch; min-height: 44px; }
+.stripe-notstarted { background: #5b9bd5; }
+.stripe-inprogress { background: #d4920a; }
+.stripe-blocked { background: #c45f0a; }
+.stripe-done { background: #2d7a4a; }
 .card-main { flex: 1; min-width: 0; }
 .card-name { font-size: 15px; font-weight: 600; color: #1a1916; }
 .card-why { font-size: 13px; color: #7a7468; margin-top: 3px; line-height: 1.45; }
+.card-meta-row { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; margin-top: 5px; }
+.card-status-badge { font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 4px; }
+.st-notstarted { background: #ddeeff; color: #2a5a8a; }
+.st-inprogress { background: #fef3d8; color: #8a5a08; }
+.st-blocked { background: #fde8d8; color: #8a3a08; }
+.st-done { background: #d8f0e4; color: #1a5a32; }
+.card-due { font-size: 11px; color: #7a7468; }
+.card-due.overdue { color: #b83020; font-weight: 600; }
+.card-updated { font-size: 11px; color: #9ab0c8; }
+.card-updated.stale { color: #c45f0a; font-weight: 600; }
 .ring-wrap { flex-shrink: 0; display: flex; flex-direction: column; align-items: center; gap: 3px; }
 .ring-pct { font-size: 11px; font-weight: 600; color: #7a7468; }
 svg.ring { transform: rotate(-90deg); }
-.chev { font-size: 11px; color: #c0b8a8; flex-shrink: 0; transition: transform 0.2s; }
+.chev { font-size: 11px; color: #a0b8d0; flex-shrink: 0; transition: transform 0.2s; }
 .card.open .chev { transform: rotate(180deg); }
-
-/* BODY */
-.card-body { display: none; border-top: 1px solid #f0ece4; }
+.card-body { display: none; border-top: 1px solid #e8f0f8; }
 .card.open .card-body { display: block; }
-
-/* BLOCKER NOTICE */
-.blocker-notice { background: #fef2e0; border-bottom: 1px solid #f0e0c0; padding: 10px 18px; font-size: 13px; color: #8a4a08; display: flex; align-items: center; gap: 8px; }
+.blocker-notice { background: #fde8d8; border-bottom: 1px solid #f0c8a8; padding: 10px 18px; font-size: 13px; color: #8a3a08; display: flex; align-items: center; gap: 8px; }
 .blocker-notice strong { font-weight: 600; }
-
-/* NEXT ACTION */
-.next-wrap { padding: 14px 18px; background: #fffbf4; border-bottom: 1px solid #f0ece4; }
-.next-label { font-size: 10px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #b85e08; margin-bottom: 6px; }
+.next-wrap { padding: 14px 18px; background: #fffdf4; border-bottom: 1px solid #e8f0f8; }
+.next-label { font-size: 10px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #8a6008; margin-bottom: 6px; }
 .next-text { font-size: 14px; font-weight: 500; color: #1a1916; line-height: 1.5; outline: none; min-height: 20px; }
 .next-text:empty::before { content: attr(data-ph); color: #c0b8a8; font-weight: 400; font-style: italic; }
-
-/* STEPS */
-.steps-wrap { padding: 14px 18px; border-bottom: 1px solid #f0ece4; }
-.steps-label { font-size: 10px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #a09888; margin-bottom: 10px; }
-.step-row { display: flex; align-items: flex-start; gap: 10px; padding: 7px 0; border-bottom: 1px solid #f5f2ee; }
+.steps-wrap { padding: 14px 18px; border-bottom: 1px solid #e8f0f8; }
+.steps-label { font-size: 10px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #7a9ab8; margin-bottom: 10px; }
+.step-row { display: flex; align-items: flex-start; gap: 10px; padding: 7px 0; border-bottom: 1px solid #f0f4f8; }
 .step-row:last-of-type { border-bottom: none; }
-.step-cb { width: 18px; height: 18px; border: 1.5px solid #d4cec4; border-radius: 5px; flex-shrink: 0; margin-top: 1px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 11px; transition: all 0.15s; }
-.step-cb.on { background: #286644; border-color: #286644; color: #fff; }
-.step-label { font-size: 13px; color: #2a2820; flex: 1; line-height: 1.45; }
+.step-cb { width: 18px; height: 18px; border: 1.5px solid #a8c0d8; border-radius: 5px; flex-shrink: 0; margin-top: 1px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 11px; transition: all 0.15s; }
+.step-cb.on { background: #2d7a4a; border-color: #2d7a4a; color: #fff; }
+.step-label { font-size: 13px; color: #2a2820; flex: 1; line-height: 1.45; cursor: text; }
+.step-label:focus { outline: none; background: #fffdf4; border-radius: 4px; padding: 1px 4px; margin: -1px -4px; }
 .step-label.done { text-decoration: line-through; color: #b0a898; }
-.step-del { background: none; border: none; color: #d4cec4; cursor: pointer; font-size: 14px; padding: 0; line-height: 1; flex-shrink: 0; }
-.step-del:hover { color: #d94030; }
+.step-del { background: none; border: none; color: #c0d0e0; cursor: pointer; font-size: 14px; padding: 0; line-height: 1; flex-shrink: 0; }
+.step-del:hover { color: #c45f0a; }
 .add-step { display: flex; gap: 8px; margin-top: 10px; }
-.add-step input { flex: 1; border: 1px solid #e4e0d8; border-radius: 7px; padding: 7px 10px; font-size: 13px; color: #1a1916; background: #faf9f7; font-family: inherit; }
-.add-step input:focus { outline: none; border-color: #c06010; }
-.add-step input::placeholder { color: #c0b8a8; }
-.add-step button { background: #f5f2ee; border: 1px solid #e4e0d8; border-radius: 7px; padding: 7px 12px; font-size: 12px; font-weight: 500; color: #7a7468; cursor: pointer; font-family: inherit; white-space: nowrap; }
-.add-step button:hover { border-color: #c06010; color: #c06010; }
-
-/* NOTES */
+.add-step input { flex: 1; border: 1px solid #c8d8e8; border-radius: 7px; padding: 7px 10px; font-size: 13px; color: #1a1916; background: #f4f8fc; font-family: inherit; }
+.add-step input:focus { outline: none; border-color: #5b9bd5; }
+.add-step input::placeholder { color: #a0b8d0; }
+.add-step button { background: #eef4fa; border: 1px solid #c8d8e8; border-radius: 7px; padding: 7px 12px; font-size: 12px; font-weight: 500; color: #5a7a9a; cursor: pointer; font-family: inherit; white-space: nowrap; }
+.add-step button:hover { border-color: #5b9bd5; color: #2a5a8a; }
 .meta-wrap { padding: 14px 18px; display: flex; flex-direction: column; gap: 12px; }
-.notes-label { font-size: 10px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #a09888; margin-bottom: 6px; }
-.notes-ta { width: 100%; border: 1px solid #e4e0d8; border-radius: 7px; padding: 9px 11px; font-size: 13px; color: #1a1916; background: #faf9f7; font-family: inherit; line-height: 1.6; min-height: 70px; resize: none; }
-.notes-ta:focus { outline: none; border-color: #c06010; }
-.notes-ta::placeholder { color: #c0b8a8; }
-.meta-bottom { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
-.status-sel { border: 1px solid #e4e0d8; border-radius: 7px; padding: 6px 10px; font-size: 12px; color: #7a7468; background: #faf9f7; font-family: inherit; }
-.save-row { display: flex; align-items: center; gap: 10px; }
-.flash { font-size: 12px; color: #286644; display: none; }
-.save-btn { background: #1a1916; color: #fff; border: none; border-radius: 7px; padding: 7px 16px; font-size: 13px; font-weight: 500; cursor: pointer; font-family: inherit; }
-.save-btn:hover { background: #2e2c28; }
-.date-row { display: flex; gap: 12px; flex-wrap: wrap; align-items: flex-end; }
+.notes-label { font-size: 10px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #7a9ab8; margin-bottom: 6px; }
+.notes-ta { width: 100%; border: 1px solid #c8d8e8; border-radius: 7px; padding: 9px 11px; font-size: 13px; color: #1a1916; background: #f4f8fc; font-family: inherit; line-height: 1.6; min-height: 70px; resize: none; }
+.notes-ta:focus { outline: none; border-color: #5b9bd5; }
+.notes-ta::placeholder { color: #a0b8d0; }
+.meta-bottom { display: flex; align-items: flex-end; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
+.status-sel { border: 1px solid #c8d8e8; border-radius: 7px; padding: 6px 10px; font-size: 12px; color: #3a5a7a; background: #f4f8fc; font-family: inherit; }
 .date-field { display: flex; flex-direction: column; gap: 4px; }
-.date-field label { font-size: 10px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: #a09888; }
-.date-field input[type=date] { border: 1px solid #e4e0d8; border-radius: 7px; padding: 6px 10px; font-size: 13px; color: #1a1916; background: #faf9f7; font-family: inherit; }
-.date-field input[type=date]:focus { outline: none; border-color: #c06010; }
-.card-meta-row { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; margin-top: 5px; }
-.card-status-badge { font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 4px; }
-.st-notstarted { background: #f0ece4; color: #7a7468; }
-.st-inprogress { background: #fef2e0; color: #b85e08; }
-.st-blocked { background: #fde8e6; color: #b83020; }
-.st-done { background: #edf6f1; color: #286644; }
-.card-due { font-size: 11px; color: #7a7468; }
-.card-due.overdue { color: #b83020; font-weight: 600; }
-.card-updated { font-size: 11px; color: #b0a898; }
-.card-updated.stale { color: #b83020; font-weight: 600; }
-
-/* PROGRESS BAR */
-.pbar-wrap { height: 3px; background: #f0ece4; }
+.date-field label { font-size: 10px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: #7a9ab8; }
+.date-field input[type=date] { border: 1px solid #c8d8e8; border-radius: 7px; padding: 6px 10px; font-size: 13px; color: #1a1916; background: #f4f8fc; font-family: inherit; }
+.date-field input[type=date]:focus { outline: none; border-color: #5b9bd5; }
+.save-row { display: flex; align-items: center; gap: 10px; }
+.flash { font-size: 12px; color: #2d7a4a; display: none; }
+.save-btn { background: #1a2e40; color: #fff; border: none; border-radius: 7px; padding: 7px 16px; font-size: 13px; font-weight: 500; cursor: pointer; font-family: inherit; }
+.save-btn:hover { background: #2a4a64; }
+.pbar-wrap { height: 3px; background: #d8e8f4; }
 .pbar-fill { height: 100%; transition: width 0.3s; }
-
-/* FOOTER */
-.foot { position: fixed; bottom: 0; left: 0; right: 0; background: #fff; border-top: 1px solid #e4e0d8; padding: 12px 24px; display: flex; justify-content: space-between; align-items: center; }
-.foot-stat { font-size: 13px; color: #7a7468; }
-.foot-stat strong { color: #1a1916; }
-.foot-reset { font-size: 12px; color: #c0b8a8; background: none; border: none; cursor: pointer; font-family: inherit; }
-.foot-reset:hover { color: #d94030; }
-
-@media (max-width:580px) {
-  .card-why { display: none; }
-  .ring-wrap { display: none; }
-}
-
-/* MODAL */
-.modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.35); z-index: 200; align-items: center; justify-content: center; padding: 1.5rem; }
+.foot { position: fixed; bottom: 0; left: 0; right: 0; background: #fff; border-top: 1px solid #c8d8e8; padding: 12px 24px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 -2px 8px rgba(40,80,120,0.07); }
+.foot-stat { font-size: 13px; color: #5a7a9a; }
+.foot-stat strong { color: #1a2e40; }
+.foot-reset { font-size: 12px; color: #a0b8d0; background: none; border: none; cursor: pointer; font-family: inherit; }
+.foot-reset:hover { color: #c45f0a; }
+.add-project-btn { display: flex; align-items: center; gap: 8px; width: 100%; padding: 13px 18px; background: rgba(255,255,255,0.5); border: 1.5px dashed #90b8d8; border-radius: 12px; font-size: 14px; font-weight: 500; color: #4a7aaa; cursor: pointer; font-family: inherit; margin-top: 1rem; transition: all 0.15s; }
+.add-project-btn:hover { background: rgba(255,255,255,0.8); border-color: #5b9bd5; color: #2a5a8a; }
+.modal-overlay { display: none; position: fixed; inset: 0; background: rgba(20,40,60,0.4); z-index: 200; align-items: center; justify-content: center; padding: 1.5rem; }
 .modal-overlay.open { display: flex; }
-.modal { background: #fff; border-radius: 14px; padding: 1.75rem; width: 100%; max-width: 480px; box-shadow: 0 8px 40px rgba(0,0,0,0.15); }
-.modal-title { font-size: 17px; font-weight: 700; color: #1a1916; margin-bottom: 1.25rem; }
-.modal label { font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: #a09888; display: block; margin-bottom: 5px; margin-top: 14px; }
+.modal { background: #fff; border-radius: 14px; padding: 1.75rem; width: 100%; max-width: 480px; box-shadow: 0 8px 40px rgba(20,40,80,0.18); }
+.modal-title { font-size: 17px; font-weight: 700; color: #1a2e40; margin-bottom: 1.25rem; }
+.modal label { font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: #7a9ab8; display: block; margin-bottom: 5px; margin-top: 14px; }
 .modal label:first-of-type { margin-top: 0; }
-.modal input, .modal textarea, .modal select { width: 100%; border: 1px solid #e4e0d8; border-radius: 7px; padding: 8px 11px; font-size: 14px; color: #1a1916; font-family: inherit; background: #faf9f7; }
-.modal input:focus, .modal textarea:focus, .modal select:focus { outline: none; border-color: #c06010; }
+.modal input, .modal textarea, .modal select { width: 100%; border: 1px solid #c8d8e8; border-radius: 7px; padding: 8px 11px; font-size: 14px; color: #1a1916; font-family: inherit; background: #f4f8fc; }
+.modal input:focus, .modal textarea:focus, .modal select:focus { outline: none; border-color: #5b9bd5; }
 .modal textarea { min-height: 70px; resize: none; line-height: 1.5; }
 .modal-btns { display: flex; gap: 8px; justify-content: flex-end; margin-top: 1.25rem; }
-.modal-cancel { background: none; border: 1px solid #e4e0d8; border-radius: 7px; padding: 8px 16px; font-size: 13px; color: #7a7468; cursor: pointer; font-family: inherit; }
-.modal-cancel:hover { border-color: #c0b8a8; }
-.modal-confirm { background: #1a1916; color: #fff; border: none; border-radius: 7px; padding: 8px 18px; font-size: 13px; font-weight: 600; cursor: pointer; font-family: inherit; }
-.modal-confirm:hover { background: #2e2c28; }
-.add-project-btn { display: flex; align-items: center; gap: 8px; width: 100%; padding: 13px 18px; background: none; border: 1.5px dashed #d4cec4; border-radius: 12px; font-size: 14px; font-weight: 500; color: #a09888; cursor: pointer; font-family: inherit; margin-top: 1rem; transition: all 0.15s; }
-.add-project-btn:hover { border-color: #c06010; color: #c06010; background: #fffbf4; }
+.modal-cancel { background: none; border: 1px solid #c8d8e8; border-radius: 7px; padding: 8px 16px; font-size: 13px; color: #5a7a9a; cursor: pointer; font-family: inherit; }
+.modal-confirm { background: #1a2e40; color: #fff; border: none; border-radius: 7px; padding: 8px 18px; font-size: 13px; font-weight: 600; cursor: pointer; font-family: inherit; }
+.modal-confirm:hover { background: #2a4a64; }
+@media (max-width:580px) { .card-why { display: none; } .ring-wrap { display: none; } }
 </style>
 </head>
 <body>
@@ -151,31 +121,23 @@ svg.ring { transform: rotate(-90deg); }
   <button class="add-project-btn" onclick="openModal()">+ Add new project</button>
 </div>
 
-<!-- NEW PROJECT MODAL -->
 <div class="modal-overlay" id="modal-overlay">
   <div class="modal">
     <div class="modal-title">Add new project</div>
     <label>Project name</label>
     <input type="text" id="m-name" placeholder="e.g. BJ's Restaurants Pitch">
-    <label>Why it matters / what it unblocks</label>
-    <input type="text" id="m-why" placeholder="e.g. $5M opportunity, stage 2 of 6 approval">
+    <label>Why it matters</label>
+    <input type="text" id="m-why" placeholder="e.g. Largest revenue opportunity this year">
     <label>Tier</label>
     <select id="m-tier">
       <option value="1">Tier 1 — Do this now</option>
       <option value="2" selected>Tier 2 — Active, keep moving</option>
-      <option value="3">Tier 3 — Scheduled / blocked</option>
-    </select>
-    <label>Priority color</label>
-    <select id="m-stripe">
-      <option value="stripe-red">🔴 Red — blocking / urgent</option>
-      <option value="stripe-amber" selected>🟡 Amber — active</option>
-      <option value="stripe-blue">🔵 Blue — scheduled</option>
-      <option value="stripe-green">🟢 Green — healthy / done</option>
+      <option value="3">Tier 3 — Not yet / blocked</option>
     </select>
     <label>Blocked by (optional)</label>
-    <input type="text" id="m-blocked" placeholder="e.g. Coffee hire must be complete first">
-    <label>Notes / context (optional)</label>
-    <textarea id="m-notes" placeholder="Anything important to remember about this project..."></textarea>
+    <input type="text" id="m-blocked" placeholder="e.g. Coffee hire must happen first">
+    <label>Notes (optional)</label>
+    <textarea id="m-notes" placeholder="Context, constraints, things to remember..."></textarea>
     <label>Due date (optional)</label>
     <input type="date" id="m-due">
     <div class="modal-btns">
@@ -191,228 +153,66 @@ svg.ring { transform: rotate(-90deg); }
 </div>
 
 <script>
-const KEY = 'jake_pt_v3';
-
+const KEY = 'jake_pt_v4';
 const DEFAULTS = [
-
-  // ── TIER 1 ─────────────────────────────────────────────────
-  {
-    id:'coffee-hire', tier:1, stripe:'stripe-red',
-    name:'Coffee Rep Hire',
-    why:'Until this is filled you are the coffee sales team. This one hire gives you your time back across everything else.',
-    blockedBy: null,
-    nextAction:'Get specific about what a good fit looks like — write it down, then re-review current applicants against it',
-    status:'blocking',
-    notes:'Posting is live. Several interviews done, no good fit yet. Need to build a training program alongside or just after the hire. Running parallel to all other workstreams — this should always be moving.',
-    steps:[
-      {id:'a1',text:'Write down exactly what a good fit looks like — skills, personality, existing book',done:false},
-      {id:'a2',text:'Re-review all current applicants against that criteria',done:false},
-      {id:'a3',text:'Schedule next round of interviews',done:false},
-      {id:'a4',text:'Make the hire',done:false},
-      {id:'a5',text:'Build onboarding and training program',done:false},
-      {id:'a6',text:'Hand off all coffee sales — fully reclaim your time',done:false},
-    ]
-  },
-
-  {
-    id:'csr-team', tier:1, stripe:'stripe-red',
-    name:'CSR Team Stabilization',
-    why:'Temp is gone. Dawn is on a timer. Patricia is executing not supervising. This needs active management now.',
-    blockedBy: null,
-    nextAction:'Calculate the exact date Dawn can be hired full time — 4 months from her temp start date',
-    status:'active',
-    notes:'Non-returning temp — communicated to Patricia. Dawn to be hired full time but must wait 4 months from her temp start date to avoid paying the agency placement fee. Evelyn is the current temp handling email orders, staging drivers, and pulling reports. Patricia is doing everything herself and not supervising — this is the core structural problem. Need to eventually define and hire a digital person for Colors Pizza orders and bulk/distributor orders, but cannot do that until the workflow is mapped and an SOP exists.',
-    steps:[
-      {id:'b1',text:'Temp not returning — communicated to Patricia ✓',done:true},
-      {id:'b2',text:'Calculate exact date Dawn can be hired full time (4 months from temp start)',done:false},
-      {id:'b3',text:'Put Dawn\'s hire date on the calendar now',done:false},
-      {id:'b4',text:'Have direct conversation with Patricia — her job is to supervise, not execute',done:false},
-      {id:'b5',text:'Sit with Patricia and map the Colors Pizza order workflow as-is',done:false},
-      {id:'b6',text:'Sit with Patricia and map the bulk/distributor order workflow as-is',done:false},
-      {id:'b7',text:'Write the SOP for Colors Pizza orders from that session',done:false},
-      {id:'b8',text:'Write the SOP for bulk/distributor orders from that session',done:false},
-      {id:'b9',text:'Write the JD for the digital person based on both SOPs',done:false},
-      {id:'b10',text:'Post and hire the digital person for Colors/bulk orders',done:false},
-      {id:'b11',text:'Hire Dawn full time on the correct date',done:false},
-    ]
-  },
-
-  {
-    id:'distributor-calls', tier:1, stripe:'stripe-amber',
-    name:'Distributor Relationship Building',
-    why:'Company directive. Comes before new business. Needs to be a recurring calendar commitment or it will never happen.',
-    blockedBy: null,
-    nextAction:'Put a recurring weekly distributor call on the calendar starting this week',
-    status:'active',
-    notes:'Directive: understand what\'s working, what\'s not, what they need to move more Sadie Rose product. Negotiate better payment terms in the process. This is strategic and compounds over time — one call per week is enough to start.',
-    steps:[
-      {id:'h1',text:'List all key distributor accounts by revenue',done:false},
-      {id:'h2',text:'Set a recurring weekly calendar block for distributor calls',done:false},
-      {id:'h3',text:'Build a simple call framework — 3 questions to ask every time',done:false},
-      {id:'h4',text:'Work through the list one per week',done:false},
-      {id:'h5',text:'Track what you\'re hearing — feed findings into sales report analysis',done:false},
-      {id:'h6',text:'Negotiate better payment terms as opportunities come up',done:false},
-    ]
-  },
-
-  // ── TIER 2 ─────────────────────────────────────────────────
-  {
-    id:'colors-alloc', tier:2, stripe:'stripe-amber',
-    name:'Colors Pizza Account Allocation',
-    why:'Blocking the commission plan. Former rep Bruno departed — book needs to be split before baselines can be set.',
-    blockedBy: null,
-    nextAction:'Pull the full Colors Pizza customer list from GlobalBake',
-    status:'active',
-    notes:'This only matters for the commission plan — not for Pipedrive, which is new business only. Split by territory: James owns SD/IE, Nino owns LA/OC.',
-    steps:[
-      {id:'d1',text:'Pull full Colors Pizza customer list from GlobalBake',done:false},
-      {id:'d2',text:'Allocate accounts by territory — James (SD/IE), Nino (LA/OC)',done:false},
-      {id:'d3',text:'Communicate allocations to both reps',done:false},
-    ]
-  },
-
-  {
-    id:'globalBake-reports', tier:2, stripe:'stripe-amber',
-    name:'Pull & Analyze Sales Reports',
-    why:'Need 2025 actuals per rep for the commission plan. Need both years to understand the forecast gap.',
-    blockedBy: null,
-    nextAction:'Pull 2025 full-year sales report from GlobalBake',
-    status:'active',
-    notes:'Pull from GlobalBake. Two separate purposes: (1) per-rep actuals for commission baselines, (2) full company view vs forecast to understand why you\'re missing. Analysis happens in Claude after pulling.',
-    steps:[
-      {id:'r1',text:'Pull 2025 full-year sales report from GlobalBake',done:false},
-      {id:'r2',text:'Pull 2026 YTD sales report from GlobalBake',done:false},
-      {id:'r3',text:'Pull per-rep breakdown for 2025 (James and Nino individually)',done:false},
-      {id:'r4',text:'Paste all reports into Claude — analyze vs forecast, identify gap drivers',done:false},
-      {id:'r5',text:'Build improvement plan from the analysis',done:false},
-      {id:'r6',text:'Block 3 hours on the calendar for this — do not chip at it',done:false},
-    ]
-  },
-
-  {
-    id:'pipedrive', tier:2, stripe:'stripe-amber',
-    name:'Pipedrive for Sadie Rose Reps',
-    why:'New business pipeline only. You have no visibility into what James and Nino are actually working.',
-    blockedBy: null,
-    nextAction:'Define the pipeline stages for Sadie Rose new business before touching anything in the app',
-    status:'active',
-    notes:'Already paying for Pipedrive and using it for coffee. This is for new business only — not existing account management. Build stages first, then get reps on the app, then reports. Custom fields TBD once you know what you want to track.',
-    steps:[
-      {id:'c1',text:'Define new business pipeline stages (prospect → pitch → sample → close)',done:false},
-      {id:'c2',text:'Build those stages in Pipedrive',done:false},
-      {id:'c3',text:'Get James and Nino on the app — accounts set up',done:false},
-      {id:'c4',text:'Run a 30-min walkthrough with both reps',done:false},
-      {id:'c5',text:'Build a recurring weekly pipeline review report',done:false},
-      {id:'c6',text:'Determine custom fields once you\'ve used it for a few weeks',done:false},
-    ]
-  },
-
-  // ── TIER 3 ─────────────────────────────────────────────────
-  {
-    id:'commission', tier:3, stripe:'stripe-blue',
-    name:'Commission Plan — James & Nino',
-    why:'Cannot start until Colors is allocated and 2025 actuals are pulled. Do not try to do this before those are done.',
-    blockedBy:'Colors Pizza allocation + 2025 actuals from GlobalBake must be done first',
-    nextAction:'Do not start yet — Colors allocation and GlobalBake reports must be done first',
-    status:'scheduled',
-    notes:'Need per-rep 2025 actuals to set meaningful baselines. Then build the step-based tier structure. Reps must sign a formal agreement before the new plan goes live.',
-    steps:[
-      {id:'e1',text:'✋ Wait — Colors Pizza allocation must be done first',done:false},
-      {id:'e2',text:'✋ Wait — 2025 per-rep actuals from GlobalBake must be pulled first',done:false},
-      {id:'e3',text:'Define quarterly baselines per rep from actuals',done:false},
-      {id:'e4',text:'Build step-based commission tier structure',done:false},
-      {id:'e5',text:'Write the formal commission agreement document',done:false},
-      {id:'e6',text:'Review plan and agreement with leadership',done:false},
-      {id:'e7',text:'Present to James and Nino',done:false},
-      {id:'e8',text:'Get signed agreements from both reps',done:false},
-    ]
-  },
-
-  {
-    id:'coffee-training', tier:3, stripe:'stripe-blue',
-    name:'Coffee Rep Training Program',
-    why:'No point building this until the hire is made. Runs immediately after — do not delay once the rep is in.',
-    blockedBy:'Coffee rep must be hired first',
-    nextAction:'Do not start yet — complete the coffee hire first',
-    status:'scheduled',
-    notes:'Build onboarding, account intro process, product knowledge, and sales playbook for the new coffee rep. This is what gives you confidence to fully hand off coffee sales.',
-    steps:[
-      {id:'t1',text:'✋ Wait — coffee hire must be completed first',done:false},
-      {id:'t2',text:'Outline the training program — what does week 1, 2, 3 look like',done:false},
-      {id:'t3',text:'Document the current coffee account roster and relationships',done:false},
-      {id:'t4',text:'Build product knowledge materials',done:false},
-      {id:'t5',text:'Build sales playbook — how to prospect, pitch, and close coffee accounts',done:false},
-      {id:'t6',text:'Run rep through the program',done:false},
-      {id:'t7',text:'Formally hand off coffee sales — step back completely',done:false},
-    ]
-  },
-
+  { id:'coffee-hire', tier:1, name:'Coffee Rep Hire', why:'Until this is filled you are the coffee sales team. This one hire gives you your time back across everything else.', blockedBy:null, nextAction:'Write down exactly what a good fit looks like — then re-review current applicants against it', status:'inprogress', dueDate:null, lastUpdated:null, notes:'Posting is live. Several interviews done, no good fit yet. Need to build a training program alongside or just after the hire. Running parallel to all other workstreams — always moving.', steps:[{id:'a1',text:'Write down exactly what a good fit looks like — skills, personality, existing book',done:false},{id:'a2',text:'Re-review all current applicants against that criteria',done:false},{id:'a3',text:'Schedule next round of interviews',done:false},{id:'a4',text:'Make the hire',done:false},{id:'a5',text:'Build onboarding and training program',done:false},{id:'a6',text:'Hand off all coffee sales — fully reclaim your time',done:false}] },
+  { id:'csr-team', tier:1, name:'CSR Team Stabilization', why:'Temp is gone. Dawn is on a timer. Patricia is executing not supervising. Needs active management now.', blockedBy:null, nextAction:'Calculate the exact date Dawn can be hired full time — 4 months from her temp start date', status:'inprogress', dueDate:null, lastUpdated:null, notes:'Non-returning temp communicated to Patricia. Dawn to be hired full time but must wait 4 months from temp start to avoid agency fee. Evelyn is current temp. Patricia doing everything herself — not supervising. Need to map workflow and write SOPs before defining or hiring a digital person for Colors/bulk orders.', steps:[{id:'b1',text:'Temp not returning — communicated to Patricia ✓',done:true},{id:'b2',text:'Calculate exact date Dawn can be hired full time (4 months from temp start)',done:false},{id:'b3',text:'Put Dawn\'s hire date on the calendar now',done:false},{id:'b4',text:'Have direct conversation with Patricia — her job is to supervise, not execute',done:false},{id:'b5',text:'Sit with Patricia and map the Colors Pizza order workflow as-is',done:false},{id:'b6',text:'Sit with Patricia and map the bulk/distributor order workflow as-is',done:false},{id:'b7',text:'Write the SOP for Colors Pizza orders from that session',done:false},{id:'b8',text:'Write the SOP for bulk/distributor orders from that session',done:false},{id:'b9',text:'Write the JD for the digital person based on both SOPs',done:false},{id:'b10',text:'Post and hire the digital person for Colors/bulk orders',done:false},{id:'b11',text:'Hire Dawn full time on the correct date',done:false}] },
+  { id:'distributor-calls', tier:1, name:'Distributor Relationship Building', why:'Company directive. Comes before new business. Needs a recurring calendar commitment or it will never happen.', blockedBy:null, nextAction:'Put a recurring weekly distributor call on the calendar starting this week', status:'notstarted', dueDate:null, lastUpdated:null, notes:'Directive: understand what\'s working, what\'s not, what they need to move more product. Negotiate better payment terms. One call per week to start.', steps:[{id:'h1',text:'List all key distributor accounts by revenue',done:false},{id:'h2',text:'Set a recurring weekly calendar block for distributor calls',done:false},{id:'h3',text:'Build a simple call framework — 3 questions to ask every time',done:false},{id:'h4',text:'Work through the list one per week',done:false},{id:'h5',text:'Track findings — feed into sales report analysis',done:false},{id:'h6',text:'Negotiate better payment terms as opportunities arise',done:false}] },
+  { id:'colors-alloc', tier:2, name:'Colors Pizza Account Allocation', why:'Blocking the commission plan. Bruno departed — book needs splitting before baselines can be set.', blockedBy:null, nextAction:'Pull the full Colors Pizza customer list from GlobalBake', status:'notstarted', dueDate:null, lastUpdated:null, notes:'For commission plan only — not Pipedrive. James owns SD/IE, Nino owns LA/OC.', steps:[{id:'d1',text:'Pull full Colors Pizza customer list from GlobalBake',done:false},{id:'d2',text:'Allocate accounts by territory — James (SD/IE), Nino (LA/OC)',done:false},{id:'d3',text:'Communicate allocations to both reps',done:false}] },
+  { id:'globalBake-reports', tier:2, name:'Pull & Analyze Sales Reports', why:'Need 2025 actuals per rep for commission plan. Need both years to understand the forecast gap.', blockedBy:null, nextAction:'Pull 2025 full-year sales report from GlobalBake', status:'notstarted', dueDate:null, lastUpdated:null, notes:'Pull from GlobalBake. Two purposes: per-rep actuals for commission baselines, and full company view vs forecast. Analysis in Claude after pulling. Block 3 hours — do not chip at this.', steps:[{id:'r1',text:'Pull 2025 full-year sales report from GlobalBake',done:false},{id:'r2',text:'Pull 2026 YTD sales report from GlobalBake',done:false},{id:'r3',text:'Pull per-rep breakdown for 2025 — James and Nino individually',done:false},{id:'r4',text:'Paste all reports into Claude — analyze vs forecast, identify gap drivers',done:false},{id:'r5',text:'Build improvement plan from the analysis',done:false},{id:'r6',text:'Block 3 hours on the calendar for this — do not chip at it',done:false}] },
+  { id:'pipedrive', tier:2, name:'Pipedrive for Sadie Rose Reps', why:'New business pipeline only. You have zero visibility into what James and Nino are actually working.', blockedBy:null, nextAction:'Define the new business pipeline stages before touching anything in the app', status:'notstarted', dueDate:null, lastUpdated:null, notes:'Already paying for Pipedrive, using it for coffee. New business only — not existing account management. Build stages first, get reps on app, then reports. Custom fields TBD after a few weeks.', steps:[{id:'c1',text:'Define new business pipeline stages (prospect → pitch → sample → close)',done:false},{id:'c2',text:'Build those stages in Pipedrive',done:false},{id:'c3',text:'Get James and Nino on the app — accounts set up',done:false},{id:'c4',text:'Run a 30-min walkthrough with both reps',done:false},{id:'c5',text:'Build a recurring weekly pipeline review report',done:false},{id:'c6',text:'Determine custom fields after a few weeks of real use',done:false}] },
+  { id:'commission', tier:3, name:'Commission Plan — James & Nino', why:'Cannot start until Colors is allocated and 2025 actuals are pulled.', blockedBy:'Colors Pizza allocation + 2025 actuals from GlobalBake must be complete first', nextAction:'Do not start yet — Colors allocation and GlobalBake reports must be done first', status:'notstarted', dueDate:null, lastUpdated:null, notes:'Need per-rep 2025 actuals for meaningful baselines. Build step-based tier structure. Reps must sign a formal agreement before new plan goes live.', steps:[{id:'e1',text:'✋ Colors Pizza allocation must be done first',done:false},{id:'e2',text:'✋ 2025 per-rep actuals from GlobalBake must be pulled first',done:false},{id:'e3',text:'Define quarterly baselines per rep from actuals',done:false},{id:'e4',text:'Build step-based commission tier structure',done:false},{id:'e5',text:'Write the formal commission agreement document',done:false},{id:'e6',text:'Review plan and agreement with leadership',done:false},{id:'e7',text:'Present to James and Nino',done:false},{id:'e8',text:'Get signed agreements from both reps',done:false}] },
+  { id:'coffee-training', tier:3, name:'Coffee Rep Training Program', why:'No point building this until the hire is made. Runs immediately after.', blockedBy:'Coffee rep must be hired first', nextAction:'Do not start yet — complete the coffee hire first', status:'notstarted', dueDate:null, lastUpdated:null, notes:'Build onboarding, account intro process, product knowledge, and sales playbook. This is what lets you fully hand off coffee sales.', steps:[{id:'t1',text:'✋ Coffee hire must be completed first',done:false},{id:'t2',text:'Outline the program — week 1, 2, 3',done:false},{id:'t3',text:'Document current coffee account roster and key relationships',done:false},{id:'t4',text:'Build product knowledge materials',done:false},{id:'t5',text:'Build sales playbook — prospect, pitch, close',done:false},{id:'t6',text:'Run rep through the program',done:false},{id:'t7',text:'Formally hand off coffee sales — step back completely',done:false}] },
 ];
 
 const TIER_META = {
-  1:{ label:'Tier 1', desc:'Do these now — they unblock or compound everything else' },
-  2:{ label:'Tier 2', desc:'Active work — keep these moving in parallel' },
-  3:{ label:'Tier 3', desc:'Blocked or future — do not start until prerequisites are done' },
+  1:{ label:'Tier 1', desc:'Do these now — they unblock everything else' },
+  2:{ label:'Tier 2', desc:'Keep these moving in parallel' },
+  3:{ label:'Tier 3', desc:'Do not start until prerequisites are done' },
 };
 
-const STRIPE_COLORS = {
-  'stripe-red':'#d94030',
-  'stripe-amber':'#c06010',
-  'stripe-blue':'#2056c0',
-  'stripe-green':'#286644',
-};
-
-function load() {
-  try { const d = JSON.parse(localStorage.getItem(KEY)); return d && d.length ? d : JSON.parse(JSON.stringify(DEFAULTS)); }
-  catch { return JSON.parse(JSON.stringify(DEFAULTS)); }
-}
-function save() { localStorage.setItem(KEY, JSON.stringify(state)); }
+function load() { try { const d=JSON.parse(localStorage.getItem(KEY)); return d&&d.length?d:JSON.parse(JSON.stringify(DEFAULTS)); } catch { return JSON.parse(JSON.stringify(DEFAULTS)); } }
+function save() { localStorage.setItem(KEY,JSON.stringify(state)); }
 
 let state = load();
 let openCards = new Set();
 
-(function(){
-  const n = new Date();
-  const D = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
-  const M = ['January','February','March','April','May','June','July','August','September','October','November','December'];
-  document.getElementById('datestr').textContent = `${D[n.getDay()]}, ${M[n.getMonth()]} ${n.getDate()}, ${n.getFullYear()}`;
-})();
+(function(){ const n=new Date(); const D=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday']; const M=['January','February','March','April','May','June','July','August','September','October','November','December']; document.getElementById('datestr').textContent=`${D[n.getDay()]}, ${M[n.getMonth()]} ${n.getDate()}, ${n.getFullYear()}`; })();
 
+function statusKey(s) { if(!s||s==='notstarted'||s==='scheduled') return 'notstarted'; if(s==='inprogress'||s==='active'||s==='blocking') return 'inprogress'; if(s==='blocked') return 'blocked'; if(s==='done') return 'done'; return 'notstarted'; }
+function statusLabel(s) { return {notstarted:'Not started',inprogress:'In progress',blocked:'Blocked',done:'Done'}[statusKey(s)]; }
+function stripeCol(s) { return {notstarted:'#5b9bd5',inprogress:'#d4920a',blocked:'#c45f0a',done:'#2d7a4a'}[statusKey(s)]||'#5b9bd5'; }
+function formatDate(d) { if(!d) return ''; const p=d.split('-'); const M=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']; return `${M[parseInt(p[1])-1]} ${parseInt(p[2])}`; }
+function isDueOverdue(d) { return d?new Date(d)<new Date():false; }
+function daysAgo(ts) { const diff=Math.floor((Date.now()-ts)/86400000); if(diff===0) return 'today'; if(diff===1) return 'yesterday'; return `${diff}d ago`; }
+function isDaysStale(ts,days) { return ts?Math.floor((Date.now()-ts)/86400000)>=days:false; }
 function stepsDone(ws) { return ws.steps.filter(s=>s.done).length; }
 function stepsTotal(ws) { return ws.steps.length; }
-function pct(ws) { return stepsTotal(ws) ? Math.round(stepsDone(ws)/stepsTotal(ws)*100) : 0; }
+function pct(ws) { return stepsTotal(ws)?Math.round(stepsDone(ws)/stepsTotal(ws)*100):0; }
 
-function ring(p, color) {
-  const r = 16, c = 2*Math.PI*r, fill = (p/100)*c;
-  return `<svg class="ring" width="40" height="40" viewBox="0 0 40 40">
-    <circle cx="20" cy="20" r="${r}" fill="none" stroke="#f0ece4" stroke-width="3"/>
-    <circle cx="20" cy="20" r="${r}" fill="none" stroke="${color}" stroke-width="3" stroke-dasharray="${fill} ${c}" stroke-linecap="round"/>
-  </svg>`;
-}
+function ring(p,color) { const r=16,c=2*Math.PI*r,fill=(p/100)*c; return `<svg class="ring" width="40" height="40" viewBox="0 0 40 40"><circle cx="20" cy="20" r="${r}" fill="none" stroke="#d8e8f4" stroke-width="3"/><circle cx="20" cy="20" r="${r}" fill="none" stroke="${color}" stroke-width="3" stroke-dasharray="${fill} ${c}" stroke-linecap="round"/></svg>`; }
 
 function render() {
-  const root = document.getElementById('root');
-  let html = '';
-  [1,2,3].forEach(tier => {
-    const items = state.filter(w=>w.tier===tier);
-    if (!items.length) return;
-    const m = TIER_META[tier];
-    html += `<div class="tier-hd t${tier}"><span class="tier-badge">${m.label}</span><span class="tier-desc">${m.desc}</span></div>`;
-    items.forEach(ws => {
-      const p = pct(ws);
-      const col = STRIPE_COLORS[ws.stripe] || '#999';
-      const isOpen = openCards.has(ws.id);
-      html += `
+  const root=document.getElementById('root');
+  let html='';
+  [1,2,3].forEach(tier=>{
+    const items=state.filter(w=>w.tier===tier);
+    if(!items.length) return;
+    const m=TIER_META[tier];
+    html+=`<div class="tier-hd"><span class="tier-badge">${m.label}</span><span class="tier-desc">${m.desc}</span></div>`;
+    items.forEach(ws=>{
+      const p=pct(ws), sk=statusKey(ws.status), col=stripeCol(ws.status), isOpen=openCards.has(ws.id);
+      html+=`
 <div class="card${isOpen?' open':''}" id="card-${ws.id}">
   <div class="card-header" onclick="toggle('${ws.id}')">
-    <div class="card-stripe ${ws.stripe}"></div>
+    <div class="card-stripe stripe-${sk}"></div>
     <div class="card-main">
       <div class="card-name">${ws.name}</div>
       <div class="card-why">${ws.why}</div>
       <div class="card-meta-row">
-        <span class="card-status-badge st-${statusKey(ws.status)}">${statusLabel(ws.status)}</span>
-        ${ws.dueDate ? `<span class="card-due${isDueOverdue(ws.dueDate)?' overdue':''}">Due ${formatDate(ws.dueDate)}${isDueOverdue(ws.dueDate)?' ⚠':''}  </span>` : ''}
-        ${ws.lastUpdated ? `<span class="card-updated${isDaysStale(ws.lastUpdated,7)?' stale':''}">Updated ${daysAgo(ws.lastUpdated)}${isDaysStale(ws.lastUpdated,7)?' — stale':''}</span>` : ''}
+        <span class="card-status-badge st-${sk}">${statusLabel(ws.status)}</span>
+        ${ws.dueDate?`<span class="card-due${isDueOverdue(ws.dueDate)?' overdue':''}">Due ${formatDate(ws.dueDate)}${isDueOverdue(ws.dueDate)?' ⚠':''}</span>`:''}
+        ${ws.lastUpdated?`<span class="card-updated${isDaysStale(ws.lastUpdated,7)?' stale':''}">Updated ${daysAgo(ws.lastUpdated)}${isDaysStale(ws.lastUpdated,7)?' — stale':''}</span>`:''}
       </div>
     </div>
     <div class="ring-wrap">${ring(p,col)}<div class="ring-pct">${p}%</div></div>
@@ -420,7 +220,7 @@ function render() {
   </div>
   <div class="pbar-wrap"><div class="pbar-fill" style="width:${p}%;background:${col}"></div></div>
   <div class="card-body">
-    ${ws.blockedBy ? `<div class="blocker-notice">⛔ <strong>Blocked by:</strong> ${ws.blockedBy}</div>` : ''}
+    ${ws.blockedBy?`<div class="blocker-notice">⛔ <strong>Blocked by:</strong> ${ws.blockedBy}</div>`:''}
     <div class="next-wrap">
       <div class="next-label">▸ Next action</div>
       <div class="next-text" id="na-${ws.id}" contenteditable="true" data-ph="What's the very next physical action?">${ws.nextAction}</div>
@@ -430,7 +230,7 @@ function render() {
       ${ws.steps.map(s=>`
         <div class="step-row">
           <div class="step-cb${s.done?' on':''}" onclick="toggleStep('${ws.id}','${s.id}')">${s.done?'✓':''}</div>
-          <div class="step-label${s.done?' done':''}">${s.text}</div>
+          <div class="step-label${s.done?' done':''}" contenteditable="true" onblur="saveStepText('${ws.id}','${s.id}',this)" spellcheck="false">${s.text}</div>
           <button class="step-del" onclick="delStep('${ws.id}','${s.id}')">✕</button>
         </div>`).join('')}
       <div class="add-step">
@@ -439,168 +239,40 @@ function render() {
       </div>
     </div>
     <div class="meta-wrap">
-      <div>
-        <div class="notes-label">Notes & context</div>
-        <textarea class="notes-ta" id="nt-${ws.id}" placeholder="Blockers, context, things to remember...">${ws.notes}</textarea>
-      </div>
+      <div><div class="notes-label">Notes & context</div><textarea class="notes-ta" id="nt-${ws.id}" placeholder="Blockers, context, things to remember...">${ws.notes}</textarea></div>
       <div class="meta-bottom">
-        <select class="status-sel" id="st-${ws.id}">
-          <option value="notstarted" ${(ws.status==='notstarted'||ws.status==='scheduled')?'selected':''}>⬜ Not started</option>
-          <option value="inprogress" ${(ws.status==='inprogress'||ws.status==='active'||ws.status==='blocking')?'selected':''}>🟡 In progress</option>
-          <option value="blocked" ${ws.status==='blocked'?'selected':''}>🔴 Blocked</option>
-          <option value="done" ${ws.status==='done'?'selected':''}>🟢 Done</option>
-        </select>
-        <div class="date-row">
-          <div class="date-field">
-            <label>Due date</label>
-            <input type="date" id="due-${ws.id}" value="${ws.dueDate||''}">
-          </div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:flex-end;">
+          <select class="status-sel" id="st-${ws.id}">
+            <option value="notstarted" ${sk==='notstarted'?'selected':''}>⬜ Not started</option>
+            <option value="inprogress" ${sk==='inprogress'?'selected':''}>🟡 In progress</option>
+            <option value="blocked"    ${sk==='blocked'?'selected':''}>🟠 Blocked</option>
+            <option value="done"       ${sk==='done'?'selected':''}>🟢 Done</option>
+          </select>
+          <div class="date-field"><label>Due date</label><input type="date" id="due-${ws.id}" value="${ws.dueDate||''}"></div>
         </div>
-        <div class="save-row">
-          <span class="flash" id="fl-${ws.id}">✓ Saved</span>
-          <button class="save-btn" onclick="saveCard('${ws.id}')">Save</button>
-        </div>
+        <div class="save-row"><span class="flash" id="fl-${ws.id}">✓ Saved</span><button class="save-btn" onclick="saveCard('${ws.id}')">Save</button></div>
       </div>
     </div>
   </div>
 </div>`;
     });
   });
-  root.innerHTML = html;
+  root.innerHTML=html;
   updateFoot();
 }
 
-function toggle(id) {
-  if (openCards.has(id)) openCards.delete(id); else openCards.add(id);
-  render();
-}
-
-function toggleStep(wsId, sId) {
-  const ws = state.find(w=>w.id===wsId);
-  const s = ws.steps.find(x=>x.id===sId);
-  s.done = !s.done;
-  const next = ws.steps.find(x=>!x.done);
-  ws.nextAction = next ? next.text : '✓ All steps complete — mark this workstream as Done';
-  save();
-  openCards.add(wsId);
-  render();
-}
-
-function delStep(wsId, sId) {
-  const ws = state.find(w=>w.id===wsId);
-  ws.steps = ws.steps.filter(x=>x.id!==sId);
-  save(); openCards.add(wsId); render();
-}
-
-function addStep(wsId) {
-  const inp = document.getElementById('si-'+wsId);
-  const t = inp.value.trim(); if (!t) return;
-  const ws = state.find(w=>w.id===wsId);
-  ws.steps.push({id:'u'+Date.now(), text:t, done:false});
-  save(); openCards.add(wsId); render();
-}
-
-function statusKey(s) {
-  if (s==='notstarted'||s==='scheduled') return 'notstarted';
-  if (s==='inprogress'||s==='active'||s==='blocking') return 'inprogress';
-  if (s==='blocked') return 'blocked';
-  if (s==='done') return 'done';
-  return 'notstarted';
-}
-function statusLabel(s) {
-  const k = statusKey(s);
-  return {notstarted:'Not started', inprogress:'In progress', blocked:'Blocked', done:'Done'}[k];
-}
-function formatDate(d) {
-  if (!d) return '';
-  const [y,m,day] = d.split('-');
-  const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-  return `${months[parseInt(m)-1]} ${parseInt(day)}`;
-}
-function isDueOverdue(d) {
-  if (!d) return false;
-  return new Date(d) < new Date();
-}
-function daysAgo(ts) {
-  const diff = Math.floor((Date.now() - ts) / 86400000);
-  if (diff === 0) return 'today';
-  if (diff === 1) return 'yesterday';
-  return `${diff}d ago`;
-}
-function isDaysStale(ts, days) {
-  return Math.floor((Date.now() - ts) / 86400000) >= days;
-}
-
-function saveCard(wsId) {
-  const ws = state.find(w=>w.id===wsId);
-  const na = document.getElementById('na-'+wsId);
-  if (na) ws.nextAction = na.innerText.trim();
-  const nt = document.getElementById('nt-'+wsId);
-  if (nt) ws.notes = nt.value;
-  const st = document.getElementById('st-'+wsId);
-  if (st) ws.status = st.value;
-  const due = document.getElementById('due-'+wsId);
-  if (due) ws.dueDate = due.value || null;
-  ws.lastUpdated = Date.now();
-  save(); openCards.add(wsId); render();
-  const fl = document.getElementById('fl-'+wsId);
-  if (fl) { fl.style.display='inline'; setTimeout(()=>fl.style.display='none',2000); }
-}
-
-function updateFoot() {
-  const total = state.reduce((a,w)=>a+pct(w),0);
-  const avg = state.length ? Math.round(total/state.length) : 0;
-  document.getElementById('ov-pct').textContent = avg+'%';
-  document.getElementById('ov-count').textContent = state.length;
-}
-
-function resetAll() {
-  if (confirm('Reset everything back to defaults?')) {
-    localStorage.removeItem(KEY);
-    state = JSON.parse(JSON.stringify(DEFAULTS));
-    openCards.clear(); render();
-  }
-}
-
-function openModal() {
-  document.getElementById('modal-overlay').classList.add('open');
-  setTimeout(() => document.getElementById('m-name').focus(), 50);
-}
-function closeModal() {
-  document.getElementById('modal-overlay').classList.remove('open');
-  ['m-name','m-why','m-blocked','m-notes','m-due'].forEach(id => document.getElementById(id).value = '');
-  document.getElementById('m-tier').value = '2';
-  document.getElementById('m-stripe').value = 'stripe-amber';
-}
-function addProject() {
-  const name = document.getElementById('m-name').value.trim();
-  if (!name) { document.getElementById('m-name').focus(); return; }
-  const newProject = {
-    id: 'p' + Date.now(),
-    tier: parseInt(document.getElementById('m-tier').value),
-    stripe: document.getElementById('m-stripe').value,
-    name,
-    why: document.getElementById('m-why').value.trim() || 'Added manually.',
-    blockedBy: document.getElementById('m-blocked').value.trim() || null,
-    nextAction: 'Define the first next action for this project',
-    status: 'notstarted',
-    notes: document.getElementById('m-notes').value.trim(),
-    dueDate: document.getElementById('m-due').value || null,
-    lastUpdated: Date.now(),
-    steps: [],
-  };
-  state.push(newProject);
-  save();
-  closeModal();
-  openCards.add(newProject.id);
-  render();
-}
-document.addEventListener('DOMContentLoaded', () => {
-  document.getElementById('modal-overlay').addEventListener('click', function(e) {
-    if (e.target === this) closeModal();
-  });
-});
-
+function toggle(id) { if(openCards.has(id)) openCards.delete(id); else openCards.add(id); render(); }
+function toggleStep(wsId,sId) { const ws=state.find(w=>w.id===wsId); const s=ws.steps.find(x=>x.id===sId); s.done=!s.done; const next=ws.steps.find(x=>!x.done); ws.nextAction=next?next.text:'✓ All steps complete — mark this workstream as Done'; save(); openCards.add(wsId); render(); }
+function delStep(wsId,sId) { const ws=state.find(w=>w.id===wsId); ws.steps=ws.steps.filter(x=>x.id!==sId); save(); openCards.add(wsId); render(); }
+function saveStepText(wsId,sId,el) { const ws=state.find(w=>w.id===wsId); const s=ws.steps.find(x=>x.id===sId); const t=el.innerText.trim(); if(t) s.text=t; else el.innerText=s.text; save(); }
+function addStep(wsId) { const inp=document.getElementById('si-'+wsId); const t=inp.value.trim(); if(!t) return; const ws=state.find(w=>w.id===wsId); ws.steps.push({id:'u'+Date.now(),text:t,done:false}); save(); openCards.add(wsId); render(); }
+function saveCard(wsId) { const ws=state.find(w=>w.id===wsId); const na=document.getElementById('na-'+wsId); if(na) ws.nextAction=na.innerText.trim(); const nt=document.getElementById('nt-'+wsId); if(nt) ws.notes=nt.value; const st=document.getElementById('st-'+wsId); if(st) ws.status=st.value; const due=document.getElementById('due-'+wsId); if(due) ws.dueDate=due.value||null; ws.lastUpdated=Date.now(); save(); openCards.add(wsId); render(); const fl=document.getElementById('fl-'+wsId); if(fl){fl.style.display='inline';setTimeout(()=>fl.style.display='none',2000);} }
+function updateFoot() { const total=state.reduce((a,w)=>a+pct(w),0); const avg=state.length?Math.round(total/state.length):0; document.getElementById('ov-pct').textContent=avg+'%'; document.getElementById('ov-count').textContent=state.length; }
+function resetAll() { if(confirm('Reset everything back to defaults?')){localStorage.removeItem(KEY);state=JSON.parse(JSON.stringify(DEFAULTS));openCards.clear();render();} }
+function openModal() { document.getElementById('modal-overlay').classList.add('open'); setTimeout(()=>document.getElementById('m-name').focus(),50); }
+function closeModal() { document.getElementById('modal-overlay').classList.remove('open'); ['m-name','m-why','m-blocked','m-notes','m-due'].forEach(id=>document.getElementById(id).value=''); document.getElementById('m-tier').value='2'; }
+function addProject() { const name=document.getElementById('m-name').value.trim(); if(!name){document.getElementById('m-name').focus();return;} const p={id:'p'+Date.now(),tier:parseInt(document.getElementById('m-tier').value),name,why:document.getElementById('m-why').value.trim()||'Added manually.',blockedBy:document.getElementById('m-blocked').value.trim()||null,nextAction:'Define the first next action for this project',status:'notstarted',notes:document.getElementById('m-notes').value.trim(),dueDate:document.getElementById('m-due').value||null,lastUpdated:Date.now(),steps:[]}; state.push(p); save(); closeModal(); openCards.add(p.id); render(); }
+document.addEventListener('DOMContentLoaded',()=>{ document.getElementById('modal-overlay').addEventListener('click',function(e){if(e.target===this)closeModal();}); });
 render();
 </script>
 </body>
