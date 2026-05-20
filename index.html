@@ -7,18 +7,30 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; }
-html { background: #c8ddf0; font-family: 'Inter', sans-serif; color: #1a1916; min-height: 100vh; }
+html { background: #6a9fc0; font-family: 'Inter', sans-serif; color: #1a1916; min-height: 100vh; }
 body { min-height: 100vh; padding-bottom: 80px; }
 .page { max-width: 780px; margin: 0 auto; padding: 2.5rem 1.5rem; }
-.hd { margin-bottom: 2rem; }
-.hd-eyebrow { font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: #4a6a8a; font-weight: 600; margin-bottom: 8px; }
-.hd-title { font-size: 26px; font-weight: 700; color: #1a2e40; letter-spacing: -0.02em; }
-.hd-date { font-size: 13px; color: #5a7a9a; margin-top: 4px; }
-.hd-divider { border: none; border-top: 1px solid #a8c8e8; margin-top: 1.5rem; }
-.tier-hd { display: flex; align-items: center; gap: 10px; margin: 2rem 0 1rem; flex-wrap: wrap; }
-.tier-badge { font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; padding: 3px 10px; border-radius: 20px; white-space: nowrap; background: rgba(255,255,255,0.5); color: #3a5a7a; }
-.tier-desc { font-size: 13px; color: #4a6a8a; }
-.card { background: #fff; border: 1px solid #b8d0e8; border-radius: 12px; margin-bottom: 10px; overflow: hidden; box-shadow: 0 1px 4px rgba(40,80,120,0.07); }
+.hd { margin-bottom: 2rem; text-align: center; }
+.hd-eyebrow { font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.7); font-weight: 600; margin-bottom: 8px; }
+.hd-title { font-size: 26px; font-weight: 700; color: #ffffff; letter-spacing: -0.02em; }
+.hd-date { font-size: 13px; color: rgba(255,255,255,0.7); margin-top: 4px; }
+.hd-divider { border: none; border-top: 1px solid rgba(255,255,255,0.3); margin-top: 1.5rem; }
+.tier-section { border-radius: 16px; padding: 1.25rem; margin-bottom: 1.5rem; }
+.tier-section-1 { background: #fdf0ee; border: 1px solid #f0c8c0; }
+.tier-section-2 { background: #fef6e4; border: 1px solid #f0d890; }
+.tier-section-3 { background: #eef6f0; border: 1px solid #b8d8c0; }
+.tier-hd { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; flex-wrap: wrap; gap: 8px; }
+.tier-hd-left { display: flex; align-items: center; gap: 12px; }
+.tier-number { display: none; }
+.tier-badge { font-size: 22px; font-weight: 700; letter-spacing: -0.01em; text-transform: none; color: #1a2e40; display: block; }
+.tier-desc { font-size: 13px; color: #4a6a8a; margin-top: 4px; display: block; }
+.tier-progress { display: flex; align-items: center; gap: 8px; }
+.tier-progress-bar { width: 80px; height: 5px; background: rgba(255,255,255,0.4); border-radius: 3px; overflow: hidden; }
+.tier-progress-fill { height: 100%; background: #2d7a4a; border-radius: 3px; transition: width 0.3s; }
+.tier-progress-label { font-size: 11px; font-weight: 600; color: #3a5a7a; white-space: nowrap; }
+.card { background: #fff; border: 1px solid #b8d0e8; border-radius: 12px; margin-bottom: 8px; overflow: hidden; box-shadow: 0 1px 4px rgba(40,80,120,0.07); }
+.card:last-child { margin-bottom: 0; }
+.card.stale { border: 2px solid #c45f0a; box-shadow: 0 2px 8px rgba(196,95,10,0.15); }
 .card-header { display: flex; align-items: center; gap: 14px; padding: 16px 18px; cursor: pointer; }
 .card-header:hover { background: #f8fbff; }
 .card-stripe { width: 4px; border-radius: 2px; flex-shrink: 0; align-self: stretch; min-height: 44px; }
@@ -35,10 +47,10 @@ body { min-height: 100vh; padding-bottom: 80px; }
 .st-inprogress { background: #fef3d8; color: #8a5a08; }
 .st-blocked { background: #fde8d8; color: #8a3a08; }
 .st-done { background: #d8f0e4; color: #1a5a32; }
-.card-due { font-size: 11px; color: #7a7468; }
-.card-due.overdue { color: #b83020; font-weight: 600; }
-.card-updated { font-size: 11px; color: #9ab0c8; }
-.card-updated.stale { color: #c45f0a; font-weight: 600; }
+.card-due { font-size: 12px; font-weight: 500; color: #5a7a9a; }
+.card-due.overdue { color: #b83020; font-weight: 700; }
+.card-updated { font-size: 12px; font-weight: 500; color: #5a7a9a; }
+.card-updated.stale { color: #c45f0a; font-weight: 700; }
 .ring-wrap { flex-shrink: 0; display: flex; flex-direction: column; align-items: center; gap: 3px; }
 .ring-pct { font-size: 11px; font-weight: 600; color: #7a7468; }
 svg.ring { transform: rotate(-90deg); }
@@ -61,9 +73,11 @@ svg.ring { transform: rotate(-90deg); }
 .step-label { font-size: 13px; color: #2a2820; flex: 1; line-height: 1.45; cursor: text; }
 .step-label:focus { outline: none; background: #fffdf4; border-radius: 4px; padding: 1px 4px; margin: -1px -4px; }
 .step-label.done { text-decoration: line-through; color: #b0a898; }
+.step-date { border: 1px solid #e0e8f0; border-radius: 5px; padding: 3px 6px; font-size: 11px; color: #5a7a9a; background: #f4f8fc; font-family: inherit; flex-shrink: 0; cursor: pointer; }
+.step-date:focus { outline: none; border-color: #5b9bd5; }
+.step-date-overdue { border-color: #e0a898; color: #b83020; background: #fdf0ee; font-weight: 600; }
 .step-del { background: none; border: none; color: #c0d0e0; cursor: pointer; font-size: 14px; padding: 0; line-height: 1; flex-shrink: 0; }
 .step-del:hover { color: #c45f0a; }
-.add-step { display: flex; gap: 8px; margin-top: 10px; }
 .add-step input { flex: 1; border: 1px solid #c8d8e8; border-radius: 7px; padding: 7px 10px; font-size: 13px; color: #1a1916; background: #f4f8fc; font-family: inherit; }
 .add-step input:focus { outline: none; border-color: #5b9bd5; }
 .add-step input::placeholder { color: #a0b8d0; }
@@ -71,7 +85,7 @@ svg.ring { transform: rotate(-90deg); }
 .add-step button:hover { border-color: #5b9bd5; color: #2a5a8a; }
 .meta-wrap { padding: 14px 18px; display: flex; flex-direction: column; gap: 12px; }
 .notes-label { font-size: 10px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #7a9ab8; margin-bottom: 6px; }
-.notes-ta { width: 100%; border: 1px solid #c8d8e8; border-radius: 7px; padding: 9px 11px; font-size: 13px; color: #1a1916; background: #f4f8fc; font-family: inherit; line-height: 1.6; min-height: 70px; resize: none; }
+.add-step { display: flex; gap: 8px; margin-top: 10px; } border: 1px solid #c8d8e8; border-radius: 7px; padding: 9px 11px; font-size: 13px; color: #1a1916; background: #f4f8fc; font-family: inherit; line-height: 1.6; min-height: 70px; resize: none; }
 .notes-ta:focus { outline: none; border-color: #5b9bd5; }
 .notes-ta::placeholder { color: #a0b8d0; }
 .meta-bottom { display: flex; align-items: flex-end; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
@@ -91,8 +105,12 @@ svg.ring { transform: rotate(-90deg); }
 .foot-stat strong { color: #1a2e40; }
 .foot-reset { font-size: 12px; color: #a0b8d0; background: none; border: none; cursor: pointer; font-family: inherit; }
 .foot-reset:hover { color: #c45f0a; }
-.add-project-btn { display: flex; align-items: center; gap: 8px; width: 100%; padding: 13px 18px; background: rgba(255,255,255,0.5); border: 1.5px dashed #90b8d8; border-radius: 12px; font-size: 14px; font-weight: 500; color: #4a7aaa; cursor: pointer; font-family: inherit; margin-top: 1rem; transition: all 0.15s; }
-.add-project-btn:hover { background: rgba(255,255,255,0.8); border-color: #5b9bd5; color: #2a5a8a; }
+.drag-handle { font-size: 16px; color: #c0d0e0; cursor: grab; flex-shrink: 0; padding: 0 4px; user-select: none; }
+.drag-handle:active { cursor: grabbing; }
+.card.dragging { opacity: 0.4; }
+.tier-section.drag-over { outline: 2px dashed #5b9bd5; outline-offset: -2px; }
+.drop-indicator { height: 3px; background: #5b9bd5; border-radius: 2px; margin: 4px 0; } display: flex; align-items: center; gap: 8px; width: 100%; padding: 13px 18px; background: rgba(255,255,255,0.12); border: 1.5px dashed rgba(255,255,255,0.4); border-radius: 12px; font-size: 14px; font-weight: 500; color: rgba(255,255,255,0.7); cursor: pointer; font-family: inherit; margin-top: 1rem; transition: all 0.15s; }
+.add-project-btn:hover { background: rgba(255,255,255,0.2); border-color: rgba(255,255,255,0.7); color: #fff; }
 .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(20,40,60,0.4); z-index: 200; align-items: center; justify-content: center; padding: 1.5rem; }
 .modal-overlay.open { display: flex; }
 .modal { background: #fff; border-radius: 14px; padding: 1.75rem; width: 100%; max-width: 480px; box-shadow: 0 8px 40px rgba(20,40,80,0.18); }
@@ -199,12 +217,29 @@ function render() {
     const items=state.filter(w=>w.tier===tier);
     if(!items.length) return;
     const m=TIER_META[tier];
-    html+=`<div class="tier-hd"><span class="tier-badge">${m.label}</span><span class="tier-desc">${m.desc}</span></div>`;
+    const tierDone = items.filter(w=>statusKey(w.status)==='done').length;
+    const tierPct = items.length ? Math.round((tierDone/items.length)*100) : 0;
+    html+=`<div class="tier-section tier-section-${tier}" id="tier-${tier}" ondragover="onDragOver(event)" ondrop="onDrop(event,${tier})" ondragleave="onDragLeave(event)">
+      <div class="tier-hd">
+        <div class="tier-hd-left">
+          <div class="tier-number">${tier}</div>
+          <div class="tier-label-wrap">
+            <span class="tier-badge">${m.label}</span>
+            <span class="tier-desc">${m.desc}</span>
+          </div>
+        </div>
+        <div class="tier-progress">
+          <div class="tier-progress-bar"><div class="tier-progress-fill" style="width:${tierPct}%"></div></div>
+          <span class="tier-progress-label">${tierDone} of ${items.length} done</span>
+        </div>
+      </div>`;
     items.forEach(ws=>{
       const p=pct(ws), sk=statusKey(ws.status), col=stripeCol(ws.status), isOpen=openCards.has(ws.id);
+      const staleClass = isDaysStale(ws.lastUpdated, 7) ? ' stale' : '';
       html+=`
-<div class="card${isOpen?' open':''}" id="card-${ws.id}">
+<div class="card${isOpen?' open':''}${staleClass}" id="card-${ws.id}" draggable="true" ondragstart="onDragStart(event,'${ws.id}')">
   <div class="card-header" onclick="toggle('${ws.id}')">
+    <div class="drag-handle" onclick="event.stopPropagation()">⠿</div>
     <div class="card-stripe stripe-${sk}"></div>
     <div class="card-main">
       <div class="card-name">${ws.name}</div>
@@ -212,7 +247,7 @@ function render() {
       <div class="card-meta-row">
         <span class="card-status-badge st-${sk}">${statusLabel(ws.status)}</span>
         ${ws.dueDate?`<span class="card-due${isDueOverdue(ws.dueDate)?' overdue':''}">Due ${formatDate(ws.dueDate)}${isDueOverdue(ws.dueDate)?' ⚠':''}</span>`:''}
-        ${ws.lastUpdated?`<span class="card-updated${isDaysStale(ws.lastUpdated,7)?' stale':''}">Updated ${daysAgo(ws.lastUpdated)}${isDaysStale(ws.lastUpdated,7)?' — stale':''}</span>`:''}
+        <span class="card-updated${isDaysStale(ws.lastUpdated,7)?' stale':''}">${ws.lastUpdated ? `Updated ${daysAgo(ws.lastUpdated)}${isDaysStale(ws.lastUpdated,7)?' — stale ⚠':''}` : 'Never updated'}</span>
       </div>
     </div>
     <div class="ring-wrap">${ring(p,col)}<div class="ring-pct">${p}%</div></div>
@@ -231,6 +266,7 @@ function render() {
         <div class="step-row">
           <div class="step-cb${s.done?' on':''}" onclick="toggleStep('${ws.id}','${s.id}')">${s.done?'✓':''}</div>
           <div class="step-label${s.done?' done':''}" contenteditable="true" onblur="saveStepText('${ws.id}','${s.id}',this)" spellcheck="false">${s.text}</div>
+          <input type="date" class="step-date${s.dueDate&&isDueOverdue(s.dueDate)?' step-date-overdue':''}" value="${s.dueDate||''}" onchange="saveStepDate('${ws.id}','${s.id}',this.value)" title="Due date for this step">
           <button class="step-del" onclick="delStep('${ws.id}','${s.id}')">✕</button>
         </div>`).join('')}
       <div class="add-step">
@@ -256,6 +292,7 @@ function render() {
   </div>
 </div>`;
     });
+    html+='</div>'; // close tier-section
   });
   root.innerHTML=html;
   updateFoot();
@@ -264,10 +301,107 @@ function render() {
 function toggle(id) { if(openCards.has(id)) openCards.delete(id); else openCards.add(id); render(); }
 function toggleStep(wsId,sId) { const ws=state.find(w=>w.id===wsId); const s=ws.steps.find(x=>x.id===sId); s.done=!s.done; const next=ws.steps.find(x=>!x.done); ws.nextAction=next?next.text:'✓ All steps complete — mark this workstream as Done'; save(); openCards.add(wsId); render(); }
 function delStep(wsId,sId) { const ws=state.find(w=>w.id===wsId); ws.steps=ws.steps.filter(x=>x.id!==sId); save(); openCards.add(wsId); render(); }
+function saveStepDate(wsId, sId, val) {
+  const ws = state.find(w=>w.id===wsId);
+  const s = ws.steps.find(x=>x.id===sId);
+  s.dueDate = val || null;
+  save();
+  openCards.add(wsId);
+  render();
+}
 function saveStepText(wsId,sId,el) { const ws=state.find(w=>w.id===wsId); const s=ws.steps.find(x=>x.id===sId); const t=el.innerText.trim(); if(t) s.text=t; else el.innerText=s.text; save(); }
-function addStep(wsId) { const inp=document.getElementById('si-'+wsId); const t=inp.value.trim(); if(!t) return; const ws=state.find(w=>w.id===wsId); ws.steps.push({id:'u'+Date.now(),text:t,done:false}); save(); openCards.add(wsId); render(); }
+function addStep(wsId) { const inp=document.getElementById('si-'+wsId); const t=inp.value.trim(); if(!t) return; const ws=state.find(w=>w.id===wsId); ws.steps.push({id:'u'+Date.now(),text:t,done:false,dueDate:null}); save(); openCards.add(wsId); render(); }
 function saveCard(wsId) { const ws=state.find(w=>w.id===wsId); const na=document.getElementById('na-'+wsId); if(na) ws.nextAction=na.innerText.trim(); const nt=document.getElementById('nt-'+wsId); if(nt) ws.notes=nt.value; const st=document.getElementById('st-'+wsId); if(st) ws.status=st.value; const due=document.getElementById('due-'+wsId); if(due) ws.dueDate=due.value||null; ws.lastUpdated=Date.now(); save(); openCards.add(wsId); render(); const fl=document.getElementById('fl-'+wsId); if(fl){fl.style.display='inline';setTimeout(()=>fl.style.display='none',2000);} }
 function updateFoot() { const total=state.reduce((a,w)=>a+pct(w),0); const avg=state.length?Math.round(total/state.length):0; document.getElementById('ov-pct').textContent=avg+'%'; document.getElementById('ov-count').textContent=state.length; }
+let dragId = null;
+let dragOverId = null;
+
+function onDragStart(e, wsId) {
+  dragId = wsId;
+  e.dataTransfer.effectAllowed = 'move';
+  setTimeout(() => { const el = document.getElementById('card-'+wsId); if(el) el.classList.add('dragging'); }, 0);
+}
+
+function onDragOver(e) {
+  e.preventDefault();
+  e.dataTransfer.dropEffect = 'move';
+  // Find if we're over a card
+  const cardEl = e.target.closest('.card');
+  if (cardEl && cardEl.id !== 'card-'+dragId) {
+    const overId = cardEl.id.replace('card-','');
+    if (overId !== dragOverId) {
+      // Clear previous indicator
+      document.querySelectorAll('.drop-indicator').forEach(el => el.remove());
+      dragOverId = overId;
+      // Show drop indicator above or below based on mouse position
+      const rect = cardEl.getBoundingClientRect();
+      const mid = rect.top + rect.height / 2;
+      const indicator = document.createElement('div');
+      indicator.className = 'drop-indicator';
+      if (e.clientY < mid) {
+        cardEl.parentNode.insertBefore(indicator, cardEl);
+        indicator.dataset.pos = 'before';
+        indicator.dataset.targetId = overId;
+      } else {
+        cardEl.parentNode.insertBefore(indicator, cardEl.nextSibling);
+        indicator.dataset.pos = 'after';
+        indicator.dataset.targetId = overId;
+      }
+    }
+  }
+  // Highlight the tier section
+  const tierEl = e.target.closest('.tier-section');
+  if (tierEl) tierEl.classList.add('drag-over');
+}
+
+function onDragLeave(e) {
+  const tierEl = e.target.closest('.tier-section');
+  if (tierEl && !tierEl.contains(e.relatedTarget)) {
+    tierEl.classList.remove('drag-over');
+    document.querySelectorAll('.drop-indicator').forEach(el => el.remove());
+    dragOverId = null;
+  }
+}
+
+function onDrop(e, tier) {
+  e.preventDefault();
+  document.querySelectorAll('.tier-section').forEach(el => el.classList.remove('drag-over'));
+  if (!dragId) return;
+
+  const ws = state.find(w => w.id === dragId);
+  if (!ws) { dragId = null; return; }
+
+  // Find drop indicator for position
+  const indicator = document.querySelector('.drop-indicator');
+  if (indicator) {
+    const targetId = indicator.dataset.targetId;
+    const pos = indicator.dataset.pos;
+    const targetIdx = state.findIndex(w => w.id === targetId);
+    const dragIdx = state.findIndex(w => w.id === dragId);
+    // Remove drag item
+    const [dragged] = state.splice(dragIdx, 1);
+    dragged.tier = tier;
+    dragged.lastUpdated = Date.now();
+    // Find new target index after splice
+    const newTargetIdx = state.findIndex(w => w.id === targetId);
+    const insertAt = pos === 'before' ? newTargetIdx : newTargetIdx + 1;
+    state.splice(insertAt, 0, dragged);
+  } else {
+    // Drop on tier section with no indicator — move to end of tier
+    const dragIdx = state.findIndex(w => w.id === dragId);
+    const [dragged] = state.splice(dragIdx, 1);
+    dragged.tier = tier;
+    dragged.lastUpdated = Date.now();
+    state.push(dragged);
+  }
+
+  document.querySelectorAll('.drop-indicator').forEach(el => el.remove());
+  dragOverId = null;
+  dragId = null;
+  save();
+  render();
+}
+
 function resetAll() { if(confirm('Reset everything back to defaults?')){localStorage.removeItem(KEY);state=JSON.parse(JSON.stringify(DEFAULTS));openCards.clear();render();} }
 function openModal() { document.getElementById('modal-overlay').classList.add('open'); setTimeout(()=>document.getElementById('m-name').focus(),50); }
 function closeModal() { document.getElementById('modal-overlay').classList.remove('open'); ['m-name','m-why','m-blocked','m-notes','m-due'].forEach(id=>document.getElementById(id).value=''); document.getElementById('m-tier').value='2'; }
